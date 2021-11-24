@@ -1,0 +1,15 @@
+{
+  "name": "performance",
+  "version": "1.0.0",
+  "description": "GraphQL server for PBOT performance objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^3.5.0",
+    "graphql": "15"
+  }
+}
