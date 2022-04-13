@@ -5,6 +5,6 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "ts,md",
+  "ext": "ts",
   "exec": "pnpm build && node out/index.js"
 }

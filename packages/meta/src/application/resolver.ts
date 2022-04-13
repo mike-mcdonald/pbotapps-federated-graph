@@ -1,19 +1,11 @@
-import {
-  Arg,
-  Args,
-  Authorized,
-  Ctx,
-  Mutation,
-  Query,
-  Resolver,
-} from "type-graphql";
+import { Arg, Args, Authorized, Mutation, Query, Resolver } from "type-graphql";
 import AppDataSource from "../data-source.js";
 import { Application } from "./entity.js";
 import { ApplicationArgs, NewApplicationInput } from "./input.js";
 
 @Resolver(Application)
 export class ApplicationResolver {
-  @Query((returns) => Application)
+  @Query(() => Application)
   async application(@Arg("uuid") uuid: string) {
     const application = await AppDataSource.manager.findOneBy(Application, {
       uuid,
@@ -24,12 +16,13 @@ export class ApplicationResolver {
     return application;
   }
 
-  @Query((returns) => [Application])
+  @Query(() => [Application])
   applications(@Args() { skip, take }: ApplicationArgs) {
     return AppDataSource.manager.find(Application, { skip, take });
   }
 
-  @Mutation((returns) => Application)
+  @Mutation(() => Application)
+  @Authorized()
   async addApplication(
     @Arg("newApplicationData") newApplicationData: NewApplicationInput
   ): Promise<Application> {

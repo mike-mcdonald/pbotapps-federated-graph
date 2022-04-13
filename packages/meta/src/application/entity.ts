@@ -1,13 +1,10 @@
-import { Field, ID, ObjectType } from "type-graphql";
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity } from "@pbotapps/common";
+import { Field, ObjectType } from "type-graphql";
+import { Entity, Column } from "typeorm";
 
 @Entity()
 @ObjectType()
-export class Application {
-  @PrimaryGeneratedColumn("uuid")
-  @Field((type) => ID)
-  uuid: string;
-
+export class Application extends BaseEntity {
   @Column({ length: 50 })
   @Field()
   name: string;

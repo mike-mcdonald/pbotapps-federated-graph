@@ -1,15 +1,14 @@
 {
-  "name": "@pbotapps/meta",
+  "name": "@pbotapps/common",
   "version": "1.0.0",
-  "description": "Meta application for managing applications and users of applications",
+  "description": "Common classes and utilities used throughout the monorepo",
   "main": "out/index",
-  "types": "out/index",
+  "typings": "out/index",
   "files": [
     "out"
   ],
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
-    "clean": "rm -rf ./out",
     "start": "nodemon",
     "typeorm": "typeorm-ts-node-commonjs"
   },
@@ -24,17 +23,12 @@
   },
   "homepage": "https://github.com/CityofPortland/pbotapps-federated-graphs#readme",
   "dependencies": {
-    "@pbotapps/common": "^1.0.0",
     "apollo-server": "^3.6.7",
-    "apollo-server-core": "^3.6.7",
     "apollo-server-express": "^3.6.7",
     "class-validator": "^0.13.2",
-    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-jwt": "^6.1.1",
     "graphql": "^15.3.0",
-    "passport": "^0.5.2",
-    "passport-anonymous": "^1.0.1",
     "passport-azure-ad": "^4.3.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
@@ -44,7 +38,6 @@
   "devDependencies": {
     "@types/express-jwt": "^6.0.4",
     "@types/node": "^16.11.10",
-    "@types/passport-anonymous": "^1.0.3",
     "@types/passport-azure-ad": "^4.3.1",
     "@types/validator": "^13.7.2",
     "nodemon": "^2.0.15",
