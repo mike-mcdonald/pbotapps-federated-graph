@@ -1,11 +1,11 @@
-import { IsEmail } from "class-validator";
-import { Field, ObjectType } from "type-graphql";
-import { Entity, Column, Unique } from "typeorm";
-import { BaseEntity } from "@pbotapps/common";
+import { IsEmail } from 'class-validator';
+import { Field, ObjectType } from 'type-graphql';
+import { Entity, Column, Unique } from 'typeorm';
+import { BaseEntity } from './base';
 
-@Entity({ name: "user" })
-@Unique("email", ["email"])
-@Unique("oauth", ["oauthId"])
+@Entity()
+@Unique('email', ['email'])
+@Unique('oauth', ['oauthId'])
 @ObjectType()
 export class User extends BaseEntity {
   @Column({ length: 255 })

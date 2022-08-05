@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
+    "build:lint": "eslint ./src/**/*.ts",
     "start": "nodemon",
     "typeorm": "typeorm-ts-node-commonjs"
   },
@@ -23,12 +24,16 @@
   },
   "homepage": "https://github.com/CityofPortland/pbotapps-federated-graphs#readme",
   "dependencies": {
+    "@apollo/federation": "^0.36.0",
+    "@apollo/subgraph": "^0.4.0",
+    "apollo-graphql": "^0.9.6",
     "apollo-server": "^3.6.7",
     "apollo-server-express": "^3.6.7",
     "class-validator": "^0.13.2",
     "express": "^4.17.3",
     "express-jwt": "^6.1.1",
     "graphql": "^15.3.0",
+    "graphql-tag": "^2.12.6",
     "passport-azure-ad": "^4.3.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
