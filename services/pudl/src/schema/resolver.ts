@@ -1,6 +1,7 @@
-import { Args, Ctx, Query, Resolver } from 'type-graphql';
+import { Args, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import { getDataSource } from '../data-source.js';
-import { Zone, ZoneType } from '../zone/entity.js';
+import { Table } from '../table/entity.js';
+import { ZoneType } from '../zone/entity.js';
 import { Schema } from './entity.js';
 import { FindSchemaInput } from './input.js';
 
@@ -10,7 +11,7 @@ export async function findSchema(
 ): Promise<Array<Schema>> {
   const { schema } = args;
 
-  let zones: ZoneType[] | undefined = args.zone
+  const zones: ZoneType[] | undefined = args.zone
     ? [args.zone]
     : context.zones
     ? (context.zones as ZoneType[])
@@ -21,36 +22,27 @@ export async function findSchema(
       `Could not determine zone. Either pass a zone explicitly, or resolve this from a zone object.`
     );
 
-  const res = zones.map(async zone => {
-    const ds = getDataSource(zone).shift();
+  context.zones = zones;
 
-    return ds.manager
-      .findAndCountBy(
-        Schema,
-        schema
-          ? {
-              name: schema,
-            }
-          : {}
-      )
-      .then(res => {
-        return res[0].map(s => {
-          const z = new Zone();
-          z.name = zone;
-          return {
-            ...s,
-            zone: Promise.resolve(z),
-          };
-        });
-      });
-  });
+  const schemas = await Promise.all(
+    zones.map(async zone => {
+      const ds = getDataSource(zone).shift();
 
-  const x = await Promise.all(res);
+      let query = ds.getRepository(Schema).createQueryBuilder('schema');
 
-  return x.reduce((acc, curr) => {
-    acc.push(...curr);
-    return acc;
-  }, []);
+      if (schema) {
+        query = query.where('schema.name = :name', { name: schema });
+      }
+
+      return query
+        .getMany()
+        .then(schemas =>
+          schemas.map(s => (s.zone = Promise.resolve({ name: zone })) && s)
+        );
+    })
+  ).then(res => res.reduce((acc, curr) => acc.push(...curr) && acc, []));
+
+  return schemas || [];
 }
 
 @Resolver(() => Schema)
@@ -61,5 +53,24 @@ export class SchemaResolver {
     @Args() args: FindSchemaInput
   ): Promise<Array<Schema>> {
     return findSchema(ctx, args);
+  }
+
+  @FieldResolver(() => [Table])
+  async tables(@Ctx() context, @Root() schema: Schema): Promise<Array<Table>> {
+    const ds = getDataSource(context.zones);
+
+    const tables = await Promise.all(
+      ds.map(
+        async s =>
+          await s
+            .getRepository(Table)
+            .createQueryBuilder('table')
+            .innerJoin('DBS', 'dbs', 'dbs.DB_ID = "table"."DB_ID"')
+            .where('dbs.DB_ID = :id', { id: schema.id })
+            .getMany()
+      )
+    ).then(res => res.reduce((acc, curr) => acc.push(...curr) && acc, []));
+
+    return tables || [];
   }
 }

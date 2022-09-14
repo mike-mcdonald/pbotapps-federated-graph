@@ -1,6 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { Table } from '../table/entity';
+import { Column, Entity } from 'typeorm';
 
 @Entity('COLUMNS_V2', { schema: 'public' })
 @ObjectType()
@@ -15,7 +14,7 @@ export class TableColumn {
   name: string;
 
   @Column({ name: 'CD_ID', primary: true })
-  tblId: number;
+  cdId: number;
 
   @Column('character varying', {
     name: 'COMMENT',
@@ -39,9 +38,4 @@ export class TableColumn {
   })
   @Field()
   index: number;
-
-  @ManyToOne(() => Table, table => table.columns)
-  @JoinColumn([{ name: 'CD_ID', referencedColumnName: 'id' }])
-  @Field(() => Table, { nullable: true })
-  table?: Promise<Table>;
 }

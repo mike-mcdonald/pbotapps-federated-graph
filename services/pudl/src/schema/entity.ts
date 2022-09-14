@@ -1,6 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Table } from '../table/entity';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { Zone } from '../zone/entity';
 
 @Entity('DBS', { schema: 'public' })
@@ -34,8 +33,4 @@ export class Schema {
 
   @Field(() => Zone, { nullable: true })
   zone?: Promise<Zone>;
-
-  @OneToMany(() => Table, table => table.schema)
-  @Field(() => [Table], { nullable: true })
-  tables?: Promise<Table[]>;
 }

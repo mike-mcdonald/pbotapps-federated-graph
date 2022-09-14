@@ -12,27 +12,20 @@ export class TableResolver {
   ): Promise<Array<TableColumn> | undefined> {
     const ds = getDataSource(ctx.zones);
 
-    const res = await Promise.all(
-      ds.map(async source =>
-        source.manager
-          .findAndCountBy(TableColumn, {
-            tblId: table.id,
-          })
-          .then(res => ({
-            count: res[1],
-            items: res[0],
-          }))
+    const columns = await Promise.all(
+      ds.map(
+        async source =>
+          await source
+            .getRepository(TableColumn)
+            .createQueryBuilder('col')
+            .innerJoin('CDS', 'cds', '"cds"."CD_ID" = "col"."CD_ID"')
+            .innerJoin('SDS', 'sds', '"sds"."CD_ID" = "cds"."CD_ID"')
+            .innerJoin('TBLS', 'tbls', '"tbls"."SD_ID" = "sds"."SD_ID"')
+            .where('"tbls"."TBL_ID" = :id', { id: table.id })
+            .getMany()
       )
-    );
+    ).then(res => res.reduce((acc, curr) => acc.push(...curr) && acc, []));
 
-    return res.reduce((acc, curr) => {
-      const { items } = curr;
-      acc.push(
-        ...items.map(s => {
-          return s;
-        })
-      );
-      return acc;
-    }, []);
+    return columns;
   }
 }
