@@ -1,0 +1,52 @@
+import { config as loadenv } from 'dotenv';
+import { DataSource } from 'typeorm';
+import { ZoneType } from './zone/entity';
+
+if (process.env.NODE_ENV !== 'production') {
+  const out = loadenv();
+  if (out.error) {
+    console.error(out.error);
+  }
+}
+
+export const RawMetastore = new DataSource({
+  type: 'postgres',
+  host: process.env.PUDL_POSTGRES_SERVICE_HOST,
+  port: parseInt(process.env.PUDL_POSTGRES_SERVICE_PORT),
+  username: process.env.PUDL_METASTORE_USERNAME,
+  password: process.env.PUDL_METASTORE_PASSWORD,
+  database: 'raw_zone',
+  entities: ['./**/entity.js'],
+  synchronize: false,
+  logging: false,
+});
+
+export const EnrichedMetastore = new DataSource({
+  type: 'postgres',
+  host: process.env.PUDL_POSTGRES_SERVICE_HOST,
+  port: parseInt(process.env.PUDL_POSTGRES_SERVICE_PORT),
+  username: process.env.PUDL_METASTORE_USERNAME,
+  password: process.env.PUDL_METASTORE_PASSWORD,
+  database: 'enriched_zone',
+  entities: ['./**/entity.js'],
+  synchronize: false,
+  logging: false,
+});
+
+export default {
+  enriched: EnrichedMetastore,
+  raw: RawMetastore,
+};
+
+export function getDataSource(zones: Array<ZoneType> | ZoneType) {
+  const z = Array.isArray(zones) ? zones : [zones];
+
+  return z.map(zone => {
+    switch (zone) {
+      case 'enriched':
+        return EnrichedMetastore;
+      case 'raw':
+        return RawMetastore;
+    }
+  });
+}
