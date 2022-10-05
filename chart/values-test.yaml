@@ -1,0 +1,14 @@
+image:
+  tag: main
+  pullPolicy: Always
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/server-snippet: |-
+      add_header X-Robots-Tag "noindex, nofollow";
+  hosts:
+    - host: pbotapps-test.portland.gov
+  tls:
+    - secretName: pbotapps-test-portland-gov-tls
+      hosts:
+        - pbotapps-test.portland.gov
