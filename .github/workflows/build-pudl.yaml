@@ -1,0 +1,15 @@
+name: Build PUDL
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-pudl:
+    name: Build and push 'pudl'
+    uses: ./.github/workflows/build.yaml
+    with:
+      repository: federation/pudl
+      tag: latest
+    secrets: inherit

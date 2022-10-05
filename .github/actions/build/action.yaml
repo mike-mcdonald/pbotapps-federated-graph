@@ -1,0 +1,34 @@
+name: Build and push docker image
+inputs:
+  registry:
+    description: 'Docker registry to prefix'
+    required: true
+    default: 'pbotapps.azurecr.io'
+  repository:
+    description: 'Docker repository within the specified registry to use'
+    required: true
+  tag:
+    description: 'What tag to apply to the image'
+    required: true
+  service:
+    description: 'Which service to build'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: install dependencies
+      shell: bash
+      run: pnpm
+    - name: Run docker build
+      shell: bash
+      run: |
+        docker \
+        build \
+        --file .docker/Dockerfile \
+        --tag ${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.tag }} \
+        --build-arg WORKDIR=service/${{ inputs.service }} \
+        .
+    - name: Push image to repository
+      shell: bash
+      run: docker push ${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.tag }}
