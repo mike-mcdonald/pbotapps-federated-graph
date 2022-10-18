@@ -1,0 +1,12 @@
+name: 'Secret writer'
+description: 'Writes input into paths'
+inputs:
+  variables: # id of input
+    description: Multple lines in format path=value
+    required: true
+  output:
+    description: Folder to output variables
+    required: true
+runs:
+  using: 'node16'
+  main: ../../../packages/actions/out/secret-writer.js
