@@ -13,14 +13,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Create secrets
-        uses: ./.github/actions/secret-writer
-        with:
-          variables: |
-            PUDL_POSTGRES_PASSWORD
-          output: chart/.secrets
-        env:
-          PUDL_POSTGRES_PASSWORD: ${{ secrets.PUDL_POSTGRES_PASSWORD }}
       - name: Create values file
         uses: ./.github/actions/merge-values
         with:
