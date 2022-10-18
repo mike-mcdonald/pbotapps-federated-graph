@@ -19,7 +19,7 @@ runs:
     - name: Run docker build
       shell: bash
       run: |
-        docker \
+        docker buildx \
         build \
         --file .docker/Dockerfile \
         --build-arg WORKDIR=${{ inputs.directory }} \
