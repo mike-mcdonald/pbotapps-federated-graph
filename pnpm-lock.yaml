@@ -96,6 +96,7 @@ importers:
       ts-node: ^10.7.0
       type-graphql: ^1.1.1
       typeorm: ^0.3.5
+      typescript: ^4.6.3
     dependencies:
       '@apollo/federation': 0.36.0_graphql@15.8.0
       '@apollo/subgraph': 0.4.0_graphql@15.8.0
@@ -118,7 +119,8 @@ importers:
       '@types/passport-azure-ad': 4.3.1
       '@types/validator': 13.7.2
       nodemon: 2.0.15
-      ts-node: 10.7.0_@types+node@16.11.26
+      ts-node: 10.7.0_3wvmryjdv2zgb5mgtbgo5b2ija
+      typescript: 4.6.3
 
   services/curb:
     specifiers:
@@ -261,11 +263,17 @@ importers:
       '@types/passport-anonymous': ^1.0.3
       '@types/passport-azure-ad': ^4.3.1
       '@types/validator': ^13.7.2
+      '@typescript-eslint/eslint-plugin': ^5.18.0
+      '@typescript-eslint/parser': ^5.18.0
       apollo-server: ^3.6.7
       apollo-server-core: ^3.6.7
       apollo-server-express: ^3.6.7
       class-validator: ^0.13.2
       dotenv: ^16.0.0
+      eslint: ^8.12.0
+      eslint-config-prettier: ^8.5.0
+      eslint-config-typescript: ^3.0.0
+      eslint-plugin-prettier: ^4.0.0
       express: ^4.17.3
       express-jwt: ^6.1.1
       graphql: ^15.3.0
@@ -275,8 +283,11 @@ importers:
       passport-anonymous: ^1.0.1
       passport-azure-ad: ^4.3.1
       pg: ^8.7.3
+      prettier: ^2.6.2
       reflect-metadata: ^0.1.13
+      rollup: ^2.70.1
       ts-node: ^10.7.0
+      tslib: ^2.3.1
       type-graphql: ^1.1.1
       typeorm: ^0.3.5
       typescript: ^4.6.3
@@ -309,8 +320,17 @@ importers:
       '@types/passport-anonymous': 1.0.3
       '@types/passport-azure-ad': 4.3.1
       '@types/validator': 13.7.2
+      '@typescript-eslint/eslint-plugin': 5.18.0_ub64uo67ys72md2n3igb7hrsq4
+      '@typescript-eslint/parser': 5.18.0_thk3xo4exzjr5rl6cnexo7v6re
+      eslint: 8.12.0
+      eslint-config-prettier: 8.5.0_eslint@8.12.0
+      eslint-config-typescript: 3.0.0_aq3bgdfhpcgvlkmxvac3gmr7ia
+      eslint-plugin-prettier: 4.0.0_6ler2d2uceywpuv5sikklk22gy
       nodemon: 2.0.15
+      prettier: 2.6.2
+      rollup: 2.70.1
       ts-node: 10.7.0_3wvmryjdv2zgb5mgtbgo5b2ija
+      tslib: 2.4.0
       typescript: 4.6.3
 
 packages:
@@ -3513,7 +3533,7 @@ packages:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
 
   /fast-levenshtein/2.0.6:
-    resolution: {integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=}
+    resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
     dev: true
 
   /fastq/1.13.0:
@@ -3620,7 +3640,7 @@ packages:
     dev: false
 
   /functional-red-black-tree/1.0.1:
-    resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
+    resolution: {integrity: sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g==}
     dev: true
 
   /functions-have-names/1.2.3:
@@ -3815,7 +3835,7 @@ packages:
       graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
       graphql: 15.8.0
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
   /graphql/15.8.0:
@@ -4195,7 +4215,7 @@ packages:
     dev: false
 
   /isexe/2.0.0:
-    resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
   /isstream/0.1.2:
@@ -4249,7 +4269,7 @@ packages:
     dev: false
 
   /json-stable-stringify-without-jsonify/1.0.1:
-    resolution: {integrity: sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE=}
+    resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
     dev: true
 
   /json-stringify-safe/5.0.1:
@@ -4598,7 +4618,7 @@ packages:
     dev: false
 
   /natural-compare/1.4.0:
-    resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
+    resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
   /ncp/2.0.0:
@@ -5602,7 +5622,7 @@ packages:
     dev: true
 
   /text-table/0.2.0:
-    resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
+    resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
     dev: true
 
   /thenify-all/1.6.0:
@@ -5730,6 +5750,7 @@ packages:
       make-error: 1.3.6
       v8-compile-cache-lib: 3.0.0
       yn: 3.1.1
+    dev: true
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
@@ -5889,7 +5910,7 @@ packages:
       pg: 8.7.3
       reflect-metadata: 0.1.13
       sha.js: 2.4.11
-      ts-node: 10.7.0_@types+node@16.11.26
+      ts-node: 10.7.0_3wvmryjdv2zgb5mgtbgo5b2ija
       tslib: 2.4.0
       uuid: 8.3.2
       xml2js: 0.4.23
