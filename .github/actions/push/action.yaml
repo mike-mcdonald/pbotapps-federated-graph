@@ -3,6 +3,7 @@ description: Push artifact image to specified Azure registry
 inputs:
   artifact-name:
     description: What name to give your artifact
+    required: false
   credentials:
     description: Azure credentials JSON string to use
   registry:
@@ -16,6 +17,7 @@ runs:
   using: 'composite'
   steps:
     - name: Download build
+      if: inputs.artifact-name
       uses: actions/download-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}

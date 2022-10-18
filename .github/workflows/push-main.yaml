@@ -38,12 +38,10 @@ jobs:
       - name: Build
         uses: ./.github/actions/build
         with:
-          artifact-name: ${{ matrix.service }}-${{ github.sha }}
           directory: ${{ matrix.directory }}
       - name: Push
         uses: ./.github/actions/push
         with:
-          artifact-name: ${{ matrix.service }}-${{ github.sha }}
           credentials: ${{ secrets. AZURE_CREDENTIALS }}
           registry: ${{ matrix.registry }}
           repository: ${{ matrix.repository }}

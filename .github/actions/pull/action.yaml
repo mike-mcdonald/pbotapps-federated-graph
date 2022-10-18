@@ -3,6 +3,7 @@ description: Pull Azure Container REgistry image into artifact
 inputs:
   artifact-name:
     description: What name to give your artifact
+    required: false
   credentials:
     description: Azure credentials JSON string to use
   registry:
@@ -34,6 +35,7 @@ runs:
         --output ${{ github.sha }}.tar \
         ${{ format('{0}.azurecr.io', inputs.registry) }}/${{ inputs.repository }}:${{ inputs.tag }}
     - uses: actions/upload-artifact@v3
+      if: inputs.artifact-name
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ github.sha }}.tar

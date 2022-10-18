@@ -6,6 +6,7 @@ inputs:
     required: true
   artifact-name:
     description: What name to give your artifact
+    required: false
 
 runs:
   using: 'composite'
@@ -26,6 +27,7 @@ runs:
         --output type=tar,dest=${{ github.sha }}.tar \
         .
     - name: Upload build
+      if: inputs.artifact-name
       uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}

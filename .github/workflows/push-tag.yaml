@@ -22,7 +22,6 @@ jobs:
       - name: Pull
         uses: ./.github/actions/pull
         with:
-          artifact-name: ${{ matrix.service }}-${{ github.sha }}
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           registry: ${{ matrix.registry }}
           repository: ${{ matrix.repository }}
@@ -30,7 +29,6 @@ jobs:
       - name: Push
         uses: ./.github/actions/push
         with:
-          artifact-name: ${{ matrix.service }}-${{ github.sha }}
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           registry: ${{ matrix.registry }}
           repository: ${{ matrix.repository }}
