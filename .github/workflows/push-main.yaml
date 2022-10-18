@@ -101,6 +101,7 @@ jobs:
                   value: hive_admin
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Create secrets
         if: matrix.password
         uses: ./.github/actions/secrets-writer

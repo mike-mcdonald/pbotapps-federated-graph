@@ -18,6 +18,7 @@ jobs:
             registry: pbotapps
             repository: federation/pudl
     steps:
+      - uses: actions/checkout@v3
       - name: Pull
         uses: ./.github/actions/pull
         with:

@@ -8,6 +8,7 @@ jobs:
     name: Merge value test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/merge-values
         with:
           input: ./chart/values.yaml
@@ -24,6 +25,7 @@ jobs:
     name: Secret writer test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/secret-writer
         with:
           variables: |
