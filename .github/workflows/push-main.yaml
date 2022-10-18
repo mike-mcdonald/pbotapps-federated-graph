@@ -72,7 +72,7 @@ jobs:
                   value: cockroachdb-public
                 - name: DATASOURCE_PORT
                   value: 26257
-            secrets: |
+            secretEnv: |
               DATASOURCE_PASSWORD=${{ secrets.META_DATASOURCE_PASSWORD }}
           - service: pudl-ui
             directory: services/pudl
@@ -106,7 +106,7 @@ jobs:
         if: matrix.secrets
         uses: ./.github/actions/secrets-writer
         with:
-          variables: ${{ matrix.secrets }}
+          variables: ${{ matrix.secretEnv }}
           output: chart/.secrets
       - name: Create values file
         uses: ./.github/actions/merge-values
