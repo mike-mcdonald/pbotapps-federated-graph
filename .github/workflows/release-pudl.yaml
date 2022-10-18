@@ -1,0 +1,59 @@
+name: Deploy to production
+
+on:
+  release:
+    types:
+      - published
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create secrets
+        uses: ./.github/actions/secret-writer
+        with:
+          variables: |
+            PUDL_POSTGRES_PASSWORD
+          output: chart/.secrets
+        env:
+          PUDL_POSTGRES_PASSWORD: ${{ secrets.PUDL_POSTGRES_PASSWORD }}
+      - name: Create values file
+        uses: ./.github/actions/merge-values
+        with:
+          input: chart/values-prod.yaml
+          output: values-pudl.yaml
+          values: |
+            tag: ${{ github.ref_name }}
+            ingress:
+              hosts:
+                - host: pudl.portland.gov
+                  path: /
+              tls:
+                - secretName: pudl-portland-gov-tls
+                  hosts:
+                    - pudl.portland.gov
+            extraEnv:
+              - name: PUDL_POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: pudl-raw-metastore
+                    key: POSTGRES_PASSWORD
+              - name: PUDL_POSTGRES_HOST
+                value: pudl-postgres
+              - name: PUDL_POSTGRES_PORT
+                value: 5432
+              - name: PUDL_POSTGRES_USERNAME
+                value: hive_admin
+      - uses: ./.github/actions/deploy
+        with:
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          cluster-name: pudl-kube-data-1
+          cluster-rg: pudl-kube-rg
+          namespace: pudl-test
+          chart: ./chart
+          release-name: pudl-ui
+          values-file: values-pudl.yaml
