@@ -35,10 +35,6 @@ runs:
       run: az acr login --name ${{ inputs.registry }}
     - name: Push
       shell: bash
-      run: docker push
-    - name: Build
-      uses: ./.github/actions/build
-      with:
-        registry: format('{0}.azurecr.io', ${{ inputs.registry }})
-        repository: ${{ inputs.repository }}
-        tag: ${{ inputs.tag }}
+      run: |
+        docker push \
+        ${{ format('{0}.azurecr.io', inputs.registry) }}/${{ inputs.repository }}:${{ inputs.tag }}
