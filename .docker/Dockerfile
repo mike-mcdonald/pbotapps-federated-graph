@@ -13,7 +13,7 @@ WORKDIR /home/node/
 COPY . .
 
 ARG WORKDIR
-WORKDIR ${WORKDIR}
+WORKDIR /home/node/${WORKDIR}
 
 RUN pnpm --filter "{.}..." install
 RUN pnpm --filter "{.}..." build
@@ -24,14 +24,14 @@ COPY --from=builder /home/node /home/node
 
 WORKDIR /home/node/
 
-# remove any node_modules folders
 RUN npm install -g pnpm && \
+    # remove any node_modules folders
     find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 
 ARG WORKDIR
 WORKDIR ${WORKDIR}
 
 # install only the production dependencies
-RUN pnpm --filter "{.}..." install --prod
+RUN pnpm --filter "{.}..." install --omit=dev
 
 CMD ["pnpm", "start"]

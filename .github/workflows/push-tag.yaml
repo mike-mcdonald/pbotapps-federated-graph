@@ -1,0 +1,36 @@
+name: Tag images
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  create-image:
+    name: Create images
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - service: pudl
+            directory: services/pudl
+            registry: pbotapps
+            repository: federation/pudl
+    steps:
+      - name: Pull
+        uses: ./.github/actions/pull
+        with:
+          artifact-name: ${{ matrix.service }}-${{ github.sha }}
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          registry: ${{ matrix.registry }}
+          repository: ${{ matrix.repository }}
+          tag: ${{ github.sha }}
+      - name: Push
+        uses: ./.github/actions/push
+        with:
+          artifact-name: ${{ matrix.service }}-${{ github.sha }}
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          registry: ${{ matrix.registry }}
+          repository: ${{ matrix.repository }}
+          tag: ${{ github.ref_name }}

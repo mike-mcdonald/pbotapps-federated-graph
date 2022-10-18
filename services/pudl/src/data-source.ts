@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 export const RawMetastore = new DataSource({
   type: 'postgres',
-  host: process.env.PUDL_POSTGRES_SERVICE_HOST,
-  port: parseInt(process.env.PUDL_POSTGRES_SERVICE_PORT),
-  username: process.env.PUDL_METASTORE_USERNAME,
-  password: process.env.PUDL_METASTORE_PASSWORD,
+  host: process.env.PUDL_POSTGRES_HOST,
+  port: parseInt(process.env.PUDL_POSTGRES_PORT),
+  username: process.env.PUDL_POSTGRES_USERNAME,
+  password: process.env.PUDL_POSTGRES_PASSWORD,
   database: 'raw_zone',
   entities: ['./**/entity.js'],
   synchronize: false,
@@ -23,10 +23,10 @@ export const RawMetastore = new DataSource({
 
 export const EnrichedMetastore = new DataSource({
   type: 'postgres',
-  host: process.env.PUDL_POSTGRES_SERVICE_HOST,
-  port: parseInt(process.env.PUDL_POSTGRES_SERVICE_PORT),
-  username: process.env.PUDL_METASTORE_USERNAME,
-  password: process.env.PUDL_METASTORE_PASSWORD,
+  host: process.env.PUDL_POSTGRES_HOST,
+  port: parseInt(process.env.PUDL_POSTGRES_PORT),
+  username: process.env.PUDL_POSTGRES_USERNAME,
+  password: process.env.PUDL_POSTGRES_PASSWORD,
   database: 'enriched_zone',
   entities: ['./**/entity.js'],
   synchronize: false,
@@ -41,7 +41,7 @@ export default {
 export function getDataSource(zones: Array<ZoneType> | ZoneType) {
   const z = Array.isArray(zones) ? zones : [zones];
 
-  return z.map(zone => {
+  return z.map((zone) => {
     switch (zone) {
       case 'enriched':
         return EnrichedMetastore;

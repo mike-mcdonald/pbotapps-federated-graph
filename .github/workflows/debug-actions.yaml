@@ -1,0 +1,35 @@
+name: Debug custom actions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge-values:
+    name: Merge value test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/merge-values
+        with:
+          input: ./chart/values.yaml
+          output: ./test.yaml
+          values: |
+            ingress:
+              hosts:
+                - path: /some-path
+            a: a string
+            b: 2
+            c:
+              d: 3
+  secret-writer:
+    name: Secret writer test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/secret-writer
+        with:
+          variables: |
+            SECRET_1
+            SECRET_2
+          output: secrets
+        env:
+          SECRET_1: hello
+          SECRET_2: world

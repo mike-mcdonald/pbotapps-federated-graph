@@ -1,18 +1,11 @@
-name: Build and push docker image
+name: Build image
+description: Build and push docker image to specified repository
 inputs:
-  registry:
-    description: 'Docker registry to prefix'
-    required: true
-    default: 'pbotapps.azurecr.io'
-  repository:
-    description: 'Docker repository within the specified registry to use'
-    required: true
-  tag:
-    description: 'What tag to apply to the image'
-    required: true
-  service:
+  directory:
     description: 'Which service to build'
     required: true
+  artifact-name:
+    description: What name to give your artifact
 
 runs:
   using: 'composite'
@@ -26,9 +19,11 @@ runs:
         docker \
         build \
         --file .docker/Dockerfile \
-        --tag ${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.tag }} \
-        --build-arg WORKDIR=service/${{ inputs.service }} \
+        --build-arg WORKDIR=${{ inputs.directory }} \
+        --output type=tar,dest=${{ github.sha }}.tar \
         .
-    - name: Push image to repository
-      shell: bash
-      run: docker push ${{ inputs.registry }}/${{ inputs.repository }}:${{ inputs.tag }}
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ github.sha }}.tar
