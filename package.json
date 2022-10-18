@@ -1,12 +1,12 @@
 {
-  "name": "pbotapps-cms-backend",
+  "name": "@pbotapps/federation-graphs",
   "version": "1.0.0",
   "description": "PBOT content management backends with GraphQL federation",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Michael McDonald <michael.mcdonald@portlandoregon.gov>",
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.3",
