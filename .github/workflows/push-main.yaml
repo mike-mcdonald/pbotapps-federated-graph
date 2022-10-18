@@ -104,7 +104,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create secrets
         if: matrix.password
-        uses: ./.github/actions/secrets-writer
+        uses: ./.github/actions/secret-writer
         with:
           variables: |
             DATASOURCE_PASSWORD=${{ secrets[matrix.password] }}
