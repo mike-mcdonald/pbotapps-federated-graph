@@ -119,7 +119,7 @@ jobs:
         with:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           cluster-name: ${{ matrix.cluster-name }}
-          cluster-rg: ${{ matrix.cluster-name }}
+          cluster-rg: ${{ matrix.cluster-rg }}
           namespace: ${{ matrix.cluster-ns }}
           chart: ./chart
           release-name: ${{ matrix.service }}
