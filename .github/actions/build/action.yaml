@@ -15,7 +15,7 @@ runs:
         version: latest
     - name: install dependencies
       shell: bash
-      run: pnpm
+      run: pnpm install
     - name: Run docker build
       shell: bash
       run: |
