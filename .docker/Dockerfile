@@ -32,6 +32,6 @@ ARG WORKDIR
 WORKDIR ${WORKDIR}
 
 # install only the production dependencies
-RUN pnpm --filter "{.}..." install --omit=dev
+RUN pnpm --filter "{.}..." install --prod
 
 CMD ["pnpm", "start"]
