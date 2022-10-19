@@ -16,6 +16,8 @@ async function run() {
     info(`Writing merged values to '${getInput('output')}'...`);
 
     fs.writeFileSync(getInput('output'), dump(values));
+
+    info(`Succeeded writing merged values to '${getInput('output')}'...`);
   } catch (error) {
     setFailed(error.message);
   }

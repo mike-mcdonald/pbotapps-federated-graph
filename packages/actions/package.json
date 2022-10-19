@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "dev": "pnpm build -w",
     "lint": "eslint ./src/**/*.ts"
   },
   "repository": {
