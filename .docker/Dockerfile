@@ -20,6 +20,8 @@ RUN pnpm --filter "{.}..." build
 
 FROM node:16-bullseye-slim
 
+ENV NODE_ENV=production
+
 COPY --from=builder /home/node /home/node
 
 WORKDIR /home/node/
