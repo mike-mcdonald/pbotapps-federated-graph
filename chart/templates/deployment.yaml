@@ -55,7 +55,7 @@ spec:
           command: ["pnpm", "start"]
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 4000
               protocol: TCP
           livenessProbe:
             httpGet:
