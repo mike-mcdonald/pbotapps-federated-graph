@@ -6,8 +6,8 @@ on:
       - '*'
 
 jobs:
-  create-image:
-    name: Create images
+  push-tag:
+    name: Push tag
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
