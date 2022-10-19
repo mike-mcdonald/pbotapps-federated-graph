@@ -59,11 +59,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /graphql
+              path: /graphql?query=%7B__typename%7D
               port: http
           readinessProbe:
             httpGet:
-              path: /graphql
+              path: /graphql?query=%7B__typename%7D
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
