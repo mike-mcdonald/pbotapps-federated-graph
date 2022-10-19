@@ -110,7 +110,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Create secrets
+      - name: Create azure secrets
+        uses: ./.github/actions/secret-writer
+        with:
+          variables: |
+            AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}
+            AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
+            AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
+          output: chart/.secrets
+      - name: Create datasource secrets
         if: matrix.password
         uses: ./.github/actions/secret-writer
         with:
