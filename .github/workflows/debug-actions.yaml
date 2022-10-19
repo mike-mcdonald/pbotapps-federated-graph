@@ -12,7 +12,7 @@ jobs:
       - uses: ./.github/actions/merge-values
         with:
           input: ./chart/values.yaml
-          output: ./test.yaml
+          output: test.yaml
           values: |
             ingress:
               hosts:
@@ -21,6 +21,8 @@ jobs:
             b: 2
             c:
               d: 3
+      - run: ls -al test.yaml
+        shell: bash
   secret-writer:
     name: Secret writer test
     runs-on: ubuntu-latest
@@ -29,9 +31,8 @@ jobs:
       - uses: ./.github/actions/secret-writer
         with:
           variables: |
-            SECRET_1
-            SECRET_2
+            SECRET_1=hello
+            SECRET_2=world
           output: secrets
-        env:
-          SECRET_1: hello
-          SECRET_2: world
+      - run: ls -al secrets
+        shell: bash
