@@ -6,5 +6,5 @@ metadata:
   labels:
     {{- include "chart.labels" . | nindent 4 }}
 data:
-{{- template .Values.configmap . | toYaml | nindent 2 }}
+{{- tpl (.Values.configmap | toYaml | toString) . | nindent 2 }}
 {{- end -}}
