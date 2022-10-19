@@ -17,6 +17,9 @@ runs:
     - name: install dependencies
       shell: bash
       run: pnpm install
+    - name: Set up builder
+      shell: bash
+      run: docker buildx create --use
     - name: Run docker build
       shell: bash
       run: |
