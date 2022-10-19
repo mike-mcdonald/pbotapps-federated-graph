@@ -50,8 +50,8 @@ spec:
                   name: {{ include "chart.fullname" . }}
                   key: AZURE_CLIENT_SECRET
             {{- range $i, $val := .Values.extraEnv }}
-            - {{ template $val . | toYaml | nindent 8 }}
-            {{ end -}}
+            - {{- (tpl ($val | toYaml | toString) $) | nindent 14 }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 80
