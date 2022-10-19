@@ -24,6 +24,8 @@ securityContext:
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+serviceAccount:
+  create: false
 
 service:
   type: ClusterIP
