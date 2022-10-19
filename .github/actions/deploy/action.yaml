@@ -27,20 +27,18 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v3
-    - uses: azure/setup-helm@v1
+    - uses: azure/setup-helm@v3
     - uses: azure/login@v1
       with:
         creds: ${{ inputs.credentials }}
     - name: Log into AKS
       shell: bash
-      env:
-        K8S_CLUSTER_NAME: ${{ inputs.cluster-name }}
-        K8S_CLUSTER_RG: ${{ inputs.cluster-rg }}
-      run: az aks get-credentials --name $K8S_CLUSTER_NAME --resource-group $K8S_CLUSTER_RG
+      run: |
+        az aks get-credentials \
+        --name ${{ inputs.cluster-name }} \
+        --resource-group ${{ inputs.cluster-rg }}
     - name: Deploy with CLI
       shell: bash
-      env:
-        K8S_CLUSTER_NAME: ${{ inputs.cluster-name }}
       run: |
         helm upgrade --install \
         ${{ inputs.release-name }} \
