@@ -52,6 +52,7 @@ spec:
             {{- range $i, $val := .Values.extraEnv }}
             - {{- (tpl ($val | toYaml | toString) $) | nindent 14 }}
             {{- end }}
+          command: ["pnpm", "start"]
           ports:
             - name: http
               containerPort: 80
