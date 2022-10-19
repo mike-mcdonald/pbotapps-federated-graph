@@ -76,7 +76,7 @@ jobs:
                 - name: DATASOURCE_HOST
                   value: cockroachdb-public
                 - name: DATASOURCE_PORT
-                  value: 26257
+                  value: "26257"
             password: META_DATASOURCE_PASSWORD
           - service: pudl-ui
             directory: services/pudl
@@ -104,7 +104,7 @@ jobs:
                 - name: PUDL_POSTGRES_HOST
                   value: pudl-test-postgres
                 - name: PUDL_POSTGRES_PORT
-                  value: 5432
+                  value: "5432"
                 - name: PUDL_POSTGRES_USERNAME
                   value: hive_admin
     runs-on: ubuntu-latest
