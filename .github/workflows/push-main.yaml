@@ -63,7 +63,7 @@ jobs:
               ingress:
                 hosts:
                   - paths:
-                      - path: /meta
+                      - path: /graphql/meta
                         pathType: Prefix
               extraEnv:
                 - name: DATASOURCE_PASSWORD
@@ -89,7 +89,7 @@ jobs:
                 hosts:
                   - host: pudl-test.portland.gov
                     paths:
-                      - path: /
+                      - path: /graphql
                         pathType: Prefix
                 tls:
                   - secretName: pudl-test-portland-gov-tls
