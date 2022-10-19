@@ -38,7 +38,7 @@ jobs:
       - name: Build
         uses: ./.github/actions/build
         with:
-          artifact-name: ${{ matrix.service }}-build
+          artifact-name: ${{ matrix.service }}-image
           directory: ${{ matrix.directory }}
       - name: Push
         uses: ./.github/actions/push

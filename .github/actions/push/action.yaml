@@ -25,8 +25,13 @@ runs:
     - name: Import build
       shell: bash
       run: |
-        docker import \
-        ${{ github.sha }}.tar \
+        docker load \
+        --input ${{ github.sha }}.tar
+    - name: Tag build
+      shell: bash
+      run: |
+        docker tag \
+        ${{ github.sha }} \
         ${{ format('{0}.azurecr.io', inputs.registry) }}/${{ inputs.repository }}:${{ inputs.tag }}
     - name: Log into Azure
       uses: azure/login@v1
