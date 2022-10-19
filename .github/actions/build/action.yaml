@@ -28,7 +28,7 @@ runs:
         --file .docker/Dockerfile \
         --build-arg WORKDIR=${{ inputs.directory }} \
         --tag ${{ github.sha }} \
-        --output type=oci,dest=${{ github.sha }}.tar \
+        --output type=docker,dest=${{ github.sha }}.tar \
         .
     - name: Upload build
       if: inputs.artifact-name
