@@ -4,5 +4,5 @@ import { ArgsType, Field, InputType } from 'type-graphql';
 @ArgsType()
 export class FindZoneInput {
   @Field({ nullable: true })
-  zone?: string;
+  zone: string;
 }

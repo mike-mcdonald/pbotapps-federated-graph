@@ -6,29 +6,23 @@ import { Schema } from './entity.js';
 import { FindSchemaInput } from './input.js';
 
 export async function findSchema(
-  context: { zones: Array<string> },
+  context: { zone: string },
   args: FindSchemaInput
 ): Promise<Array<Schema>> {
   const { schema } = args;
 
-  const zones: ZoneType[] | undefined = args.zone
-    ? [args.zone]
-    : context.zones
-    ? (context.zones as ZoneType[])
-    : undefined;
+  const zone = (args.zone || context.zone) as ZoneType;
 
-  if (!zones)
+  if (!zone)
     throw new Error(
       `Could not determine zone. Either pass a zone explicitly, or resolve this from a zone object.`
     );
 
-  context.zones = zones;
+  context.zone = zone;
 
   const schemas = await Promise.all(
-    zones.map(async zone => {
-      const ds = getDataSource(zone).shift();
-
-      let query = ds.getRepository(Schema).createQueryBuilder('schema');
+    getDataSource(zone).map(source => {
+      let query = source.getRepository(Schema).createQueryBuilder('schema');
 
       if (schema) {
         query = query.where('schema.name = :name', { name: schema });
@@ -40,7 +34,7 @@ export async function findSchema(
           schemas.map(s => (s.zone = Promise.resolve({ name: zone })) && s)
         );
     })
-  ).then(res => res.reduce((acc, curr) => acc.push(...curr) && acc, []));
+  ).then(schemas => schemas.flat());
 
   return schemas || [];
 }
@@ -57,10 +51,8 @@ export class SchemaResolver {
 
   @FieldResolver(() => [Table])
   async tables(@Ctx() context, @Root() schema: Schema): Promise<Array<Table>> {
-    const ds = getDataSource(context.zones);
-
     const tables = await Promise.all(
-      ds.map(
+      getDataSource(context.zone).map(
         async s =>
           await s
             .getRepository(Table)

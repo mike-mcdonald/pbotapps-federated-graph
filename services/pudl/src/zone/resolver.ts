@@ -10,11 +10,13 @@ export class ZoneResolver {
   findZone(@Ctx() ctx, @Args() args: FindZoneInput): Zone[] {
     let zones: Array<Zone> = [{ name: 'raw' }, { name: 'enriched' }];
 
-    if (args.zone) {
-      zones = zones.filter(z => z.name == args.zone);
+    if (!args.zone) {
+      throw new Error('Zone argument is required!');
     }
 
-    ctx.zones = zones.map(z => z.name);
+    zones = zones.filter(z => z.name == args.zone);
+
+    ctx.zone = zones.map(z => z.name);
 
     return zones;
   }

@@ -10,10 +10,8 @@ export class TableResolver {
     @Ctx() ctx,
     @Root() table: Table
   ): Promise<Array<TableColumn> | undefined> {
-    const ds = getDataSource(ctx.zones);
-
     const columns = await Promise.all(
-      ds.map(
+      getDataSource(ctx.zone).map(
         async source =>
           await source
             .getRepository(TableColumn)
@@ -24,7 +22,7 @@ export class TableResolver {
             .where('"tbls"."TBL_ID" = :id', { id: table.id })
             .getMany()
       )
-    ).then(res => res.reduce((acc, curr) => acc.push(...curr) && acc, []));
+    ).then(columns => columns.flat());
 
     return columns;
   }

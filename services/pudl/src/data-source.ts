@@ -38,10 +38,10 @@ export default {
   raw: RawMetastore,
 };
 
-export function getDataSource(zones: Array<ZoneType> | ZoneType) {
-  const z = Array.isArray(zones) ? zones : [zones];
+export function getDataSource(z: Array<ZoneType> | ZoneType) {
+  const zones = Array.isArray(z) ? z : [z];
 
-  return z.map((zone) => {
+  return zones.map(zone => {
     switch (zone) {
       case 'enriched':
         return EnrichedMetastore;
