@@ -5,7 +5,6 @@ import express from 'express';
 import { specifiedDirectives } from 'graphql';
 import gql from 'graphql-tag';
 import passport from 'passport';
-import { Strategy as AnonymousStrategy } from 'passport-anonymous';
 import { BearerStrategy } from 'passport-azure-ad';
 import 'reflect-metadata';
 import {
@@ -56,7 +55,7 @@ export async function bootstrap() {
 
   Promise.all([EnrichedMetastore.initialize(), RawMetastore.initialize()])
     .then(() => console.log('✅  TypeORM connections intialized!'))
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       throw new Error('Failed to initialize database');
     });
@@ -89,7 +88,6 @@ export async function bootstrap() {
       }
     )
   );
-  passport.use(new AnonymousStrategy());
 
   passport.serializeUser((user: { oauthId: string }, done) => {
     const { oauthId } = user;
@@ -101,7 +99,7 @@ export async function bootstrap() {
   });
 
   app.use(passport.initialize());
-  app.use(passport.authenticate(['oauth-bearer', 'anonymous']));
+  app.use(passport.authenticate(['oauth-bearer']));
 
   const options: BuildSchemaOptions = {
     resolvers: [SchemaResolver, TableResolver, ZoneResolver],
