@@ -1,5 +1,6 @@
 import { buildSubgraphSchema, printSubgraphSchema } from '@apollo/subgraph';
 import { ApolloServer } from 'apollo-server-express';
+import cors from 'cors';
 import { config as loadenv } from 'dotenv';
 import express from 'express';
 import { specifiedDirectives } from 'graphql';
@@ -61,6 +62,8 @@ export async function bootstrap() {
     });
 
   const app = express();
+
+  app.use(cors());
 
   passport.use(
     new BearerStrategy(
